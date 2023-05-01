@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: burlywood;
+}
+
+.wrapper {
+  max-width: 800px;
+  margin: auto;
+  background: rgb(124, 124, 255);
+  padding: 20px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.key {
+  padding: 10px;
+  background: lightblue;
+  display: flex;
+}
