@@ -16,16 +16,16 @@ const keyboardEng = [
   '=',
   'Backspace',
   'Tab',
-  'Q',
-  'W',
-  'E',
-  'R',
-  'T',
-  'Y',
-  'U',
-  'I',
-  'O',
-  'P',
+  'q',
+  'w',
+  'e',
+  'r',
+  't',
+  'y',
+  'u',
+  'i',
+  'o',
+  'p',
   '[',
   ']',
   '\\',
@@ -116,6 +116,7 @@ function createKeyboard() {
   const keyboardContainer = document.createElement('div');
 
   keyboardContainer.className = 'keyboard';
+  keyboardContainer.id = 'keyboard';
   keyboardContainer.innerHTML = createKey();
 
   return keyboardContainer;
@@ -145,21 +146,35 @@ function createKey() {
     // }
 
     if (keyboardEng[i] === 'Delete') {
-      key += '<div class="key">Del</div>';
+      key += `<div class="key" data="${keyboardEng[i]}">Del</div>`;
     } else if (keyboardEng[i] === 'Control') {
-      key += '<div class="key">Ctrl</div>';
+      key += `<div class="key" data="${keyboardEng[i]}">Ctrl</div>`;
     } else if (keyboardEng[i] === 'ArrowUp') {
-      key += '<div class="key">&#x2191;</div>';
+      key += `<div class="key" data="${keyboardEng[i]}">&#x2191;</div>`;
     } else if (keyboardEng[i] === 'ArrowLeft') {
-      key += '<div class="key">&#x2190;</div>';
+      key += `<div class="key" data="${keyboardEng[i]}">&#x2190;</div>`;
     } else if (keyboardEng[i] === 'ArrowRight') {
-      key += '<div class="key">&#x2192;</div>';
+      key += `<div class="key" data="${keyboardEng[i]}">&#x2192;</div>`;
     } else if (keyboardEng[i] === 'ArrowDown') {
-      key += '<div class="key">&#x2193;</div>';
+      key += `<div class="key" data="${keyboardEng[i]}">&#x2193;</div>`;
     } else {
-      key += `<div class="key">${keyboardEng[i]}</div>`;
+      key += `<div class="key" data="${keyboardEng[i]}">${keyboardEng[i]}</div>`;
     }
   }
 
+  console.log();
+
   return key;
 }
+
+document.onkeydown = function (event) {
+  document.querySelectorAll('#keyboard .key').forEach((el) => {
+    el.classList.remove('active');
+  });
+
+  document.querySelector(`#keyboard .key[data="${event.key}"]`).classList.add('active');
+};
+
+document.onkeyup = function (event) {
+  document.querySelector(`#keyboard .key[data="${event.key}"]`).classList.remove('active');
+};
