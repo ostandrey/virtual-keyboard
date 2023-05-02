@@ -99,8 +99,10 @@ function createMain() {
   textarea.rows = 10;
   textarea.cols = 100;
 
-  keyboardContainer.innerHTML = createKey();
   keyboardContainer.className = 'keyboard';
+  keyboardContainer.innerHTML = createKey();
+
+  main.className = 'main';
 
   main.appendChild(textarea);
   main.appendChild(keyboardContainer);
@@ -120,7 +122,38 @@ function createKey() {
   console.log(keyboardEng[0]);
 
   for (let i = 0; i < keyboardEng.length; i++) {
-    key += '<div class="key"> ' + keyboardEng[i] + '</div>';
+    if (i === 14 || i === 29 || i === 42 || i === 55 || i === 64) {
+      key += '<div class="clearfix"></div>';
+    }
+
+    // switch (keyboardEng[i]) {
+    //   case 'Delete':
+    //     key += '<div class="key">Del</div>';
+    //     break;
+    //   case 'Control':
+    //     key += '<div class="key">Ctrl</div>';
+    //     break;
+    //   case 'ArrowUp':
+    //     key += '<div class="key">&#x2191;</div>';
+    //   default:
+    //     key += '<div class="key">' + keyboardEng[i] + '</div>';
+    // }
+
+    if (keyboardEng[i] === 'Delete') {
+      key += '<div class="key">Del</div>';
+    } else if (keyboardEng[i] === 'Control') {
+      key += '<div class="key">Ctrl</div>';
+    } else if (keyboardEng[i] === 'ArrowUp') {
+      key += '<div class="key">&#x2191;</div>';
+    } else if (keyboardEng[i] === 'ArrowLeft') {
+      key += '<div class="key">&#x2190;</div>';
+    } else if (keyboardEng[i] === 'ArrowRight') {
+      key += '<div class="key">&#x2192;</div>';
+    } else if (keyboardEng[i] === 'ArrowDown') {
+      key += '<div class="key">&#x2193;</div>';
+    } else {
+      key += `<div class="key">${keyboardEng[i]}</div>`;
+    }
   }
 
   return key;
