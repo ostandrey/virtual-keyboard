@@ -94,18 +94,14 @@ function createHeader() {
 function createMain() {
   const main = document.createElement('main');
   const textarea = document.createElement('textarea');
-  const keyboardContainer = document.createElement('div');
 
   textarea.rows = 10;
   textarea.cols = 100;
 
-  keyboardContainer.className = 'keyboard';
-  keyboardContainer.innerHTML = createKey();
-
   main.className = 'main';
 
   main.appendChild(textarea);
-  main.appendChild(keyboardContainer);
+  main.appendChild(createKeyboard());
 
   return main;
 }
@@ -115,6 +111,15 @@ document.onkeydown = function (event) {
   keyboardEng.push(event.key);
   console.log(keyboardEng);
 };
+
+function createKeyboard() {
+  const keyboardContainer = document.createElement('div');
+
+  keyboardContainer.className = 'keyboard';
+  keyboardContainer.innerHTML = createKey();
+
+  return keyboardContainer;
+}
 
 function createKey() {
   let key = '';
