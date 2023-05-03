@@ -304,31 +304,52 @@ document.onkeyup = function (event) {
   document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.remove('active');
 };
 
-document.querySelectorAll('#keyboard .key').forEach((key) => {
-  // key.addEventListener('click', (event) => {
-  //   document.querySelectorAll('#keyboard .key').forEach((key) => {
-  //     key.classList.remove('active');
-  //   });
-  //   document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.add('active');
-  //   // let code = document.getAttribute('data');
-  //   // this.classList.add('active');
-  //   // console.log(code), once;
-  // });
-  key.onclick = function (event) {
-    document.querySelectorAll('#keyboard .key').forEach((el) => {
-      el.classList.remove('active');
-    });
-    let code = this.getAttribute('data');
-    this.classList.add('active');
-    console.log(code);
-  };
+document.querySelectorAll('#keyboard .key').forEach((el) => {
+  const textarea = document.querySelector('#key_input');
+  const keyboard = document.querySelector('#keyboard');
 
-  // el.mouseup = function (event) {
-  //   document.querySelectorAll('#keyboard .key').forEach((el) => {
-  //     el.classList.remove('active');
-  //   });
-  //   // let code = this.getAttribute('data');
-  //   // this.classList.remove('active');
-  //   // console.log(code);
-  // };
+  el.onclick = function (event) {
+    document.querySelectorAll('#keyboard .key').forEach((key) => {
+      key.classList.remove('active');
+    });
+
+    let code = this.getAttribute('data');
+    let keyName = this.innerText;
+    this.classList.add('active');
+
+    if (code === 'Backspace') {
+      textarea.value = textarea.value.slice(0, -1);
+    } else if (code === 'Tab') {
+      event.preventDefault();
+      textarea.value += '\t';
+    } else if (code === 'CapsLock') {
+      document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.toggle('active');
+      keyboard.classList.toggle('uppercase');
+      textarea.value += '';
+    } else if (
+      code === 'ControlLeft' ||
+      code === 'ControlRight' ||
+      code === 'AltLeft' ||
+      code === 'AltRight' ||
+      code === 'ShiftLeft' ||
+      code === 'ShiftRight' ||
+      code === 'Delete' ||
+      code === 'Meta'
+    ) {
+      event.preventDefault();
+      textarea.value += '';
+    } else if (code === 'Enter') {
+      textarea.value += '\n';
+    } else if (code === 'ArrowUp') {
+      textarea.value += '▲';
+    } else if (code === 'ArrowLeft') {
+      textarea.value += '◄';
+    } else if (code === 'ArrowRight') {
+      textarea.value += '►';
+    } else if (code === 'ArrowDown') {
+      textarea.value += '▼';
+    } else {
+      textarea.value += keyName;
+    }
+  };
 });
