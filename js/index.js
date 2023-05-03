@@ -161,17 +161,39 @@ function createHeader() {
 function createMain() {
   const main = document.createElement('main');
   const textarea = document.createElement('textarea');
+  // const additionalInfo = document.createElement('div');
+  const description = document.createElement('p');
+  const language = document.createElement('p');
 
   textarea.rows = 10;
   textarea.cols = 100;
   textarea.id = 'key_input';
 
+  description.innerText = `Keyboard created in the ${getOs()} operating system`;
+  language.innerText = `To switch the language combination: left ctrl + alt`;
+
   main.className = 'main';
 
   main.appendChild(textarea);
   main.appendChild(createKeyboard());
+  main.appendChild(description);
+  main.appendChild(language);
 
   return main;
+}
+
+function getOs() {
+  let os = navigator.userAgent;
+  let finalOs = '';
+  if (os.search('Windows') !== -1) {
+    finalOs = 'Windows';
+  } else if (os.search('Mac') !== -1) {
+    finalOs = 'MacOS';
+  } else if (os.search('Linux') !== -1 && os.search('X11') !== -1) {
+    finalOs = 'Linux';
+  }
+
+  return finalOs;
 }
 
 // document.onkeydown = function (event) {
@@ -249,9 +271,6 @@ document.onkeydown = function (event) {
     textarea.value += '\t';
   } else if (event.code === 'CapsLock') {
     document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.toggle('active');
-    console.log(
-      document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.toggle('active'),
-    );
     keyboard.classList.toggle('uppercase');
     textarea.value += '';
   } else if (
@@ -285,30 +304,31 @@ document.onkeyup = function (event) {
   document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.remove('active');
 };
 
-// document.querySelectorAll('#keyboard .key').forEach((key) => {
-//   key.addEventListener('click', () => {
-//     document.querySelectorAll('#keyboard .key').forEach((key) => {
-//       key.classList.remove('active');
-//     });
-//     let code = document.getAttribute('data');
-//     this.classList.add('active');
-//     console.log(code), once;
-//   });
-//   // el.onclick = function (event) {
-//   //   document.querySelectorAll('#keyboard .key').forEach((el) => {
-//   //     el.classList.remove('active');
-//   //   });
-//   //   let code = this.getAttribute('data');
-//   //   this.classList.add('active');
-//   //   console.log(code);
-//   // };
+document.querySelectorAll('#keyboard .key').forEach((key) => {
+  // key.addEventListener('click', (event) => {
+  //   document.querySelectorAll('#keyboard .key').forEach((key) => {
+  //     key.classList.remove('active');
+  //   });
+  //   document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.add('active');
+  //   // let code = document.getAttribute('data');
+  //   // this.classList.add('active');
+  //   // console.log(code), once;
+  // });
+  key.onclick = function (event) {
+    document.querySelectorAll('#keyboard .key').forEach((el) => {
+      el.classList.remove('active');
+    });
+    let code = this.getAttribute('data');
+    this.classList.add('active');
+    console.log(code);
+  };
 
-//   // el.mouseup = function (event) {
-//   //   document.querySelectorAll('#keyboard .key').forEach((el) => {
-//   //     el.classList.remove('active');
-//   //   });
-//   //   // let code = this.getAttribute('data');
-//   //   // this.classList.remove('active');
-//   //   // console.log(code);
-//   // };
-// });
+  // el.mouseup = function (event) {
+  //   document.querySelectorAll('#keyboard .key').forEach((el) => {
+  //     el.classList.remove('active');
+  //   });
+  //   // let code = this.getAttribute('data');
+  //   // this.classList.remove('active');
+  //   // console.log(code);
+  // };
+});
