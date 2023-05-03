@@ -39,3 +39,7 @@ body {
 .active {
   background: rgb(117, 247, 85);
 }
+
+.uppercase {
+  text-transform: capitalize;
+}

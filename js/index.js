@@ -67,6 +67,73 @@ const keyboardEng = [
   'Control',
 ];
 
+const keyboardEng2 = [
+  'Backquote',
+  'Digit1',
+  'Digit2',
+  'Digit3',
+  'Digit4',
+  'Digit5',
+  'Digit6',
+  'Digit7',
+  'Digit8',
+  'Digit9',
+  'Digit0',
+  'Minus',
+  'Equal',
+  'Backspace',
+  'Tab',
+  'KeyQ',
+  'KeyW',
+  'KeyE',
+  'KeyR',
+  'KeyT',
+  'KeyY',
+  'KeyU',
+  'KeyI',
+  'KeyO',
+  'KeyP',
+  'BracketLeft',
+  'BracketRight',
+  'Backslash',
+  'Delete',
+  'CapsLock',
+  'KeyA',
+  'KeyS',
+  'KeyD',
+  'KeyF',
+  'KeyG',
+  'KeyH',
+  'KeyJ',
+  'KeyK',
+  'KeyL',
+  'Semicolon',
+  'Quote',
+  'Enter',
+  'ShiftLeft',
+  'KeyZ',
+  'KeyX',
+  'KeyC',
+  'KeyV',
+  'KeyB',
+  'KeyN',
+  'KeyM',
+  'Comma',
+  'Period',
+  'Slash',
+  'ArrowUp',
+  'ShiftRight',
+  'ControlLeft',
+  'MetaLeft',
+  'AltLeft',
+  'Space',
+  'AltRight',
+  'ArrowLeft',
+  'ArrowDown',
+  'ArrowRight',
+  'ControlRight',
+];
+
 function initComponents() {
   const wrapper = document.createElement('div');
   wrapper.className = 'wrapper';
@@ -97,6 +164,7 @@ function createMain() {
 
   textarea.rows = 10;
   textarea.cols = 100;
+  textarea.id = 'key_input';
 
   main.className = 'main';
 
@@ -106,11 +174,11 @@ function createMain() {
   return main;
 }
 
-document.onkeydown = function (event) {
-  console.log(event);
-  keyboardEng.push(event.key);
-  console.log(keyboardEng);
-};
+// document.onkeydown = function (event) {
+//   console.log(event);
+//   keyboardEng2.push(event.code);
+//   console.log(keyboardEng2);
+// };
 
 function createKeyboard() {
   const keyboardContainer = document.createElement('div');
@@ -125,14 +193,12 @@ function createKeyboard() {
 function createKey() {
   let key = '';
 
-  console.log(keyboardEng[0]);
-
-  for (let i = 0; i < keyboardEng.length; i++) {
+  for (let i = 0; i < keyboardEng2.length; i++) {
     if (i === 14 || i === 29 || i === 42 || i === 55 || i === 64) {
       key += '<div class="clearfix"></div>';
     }
 
-    // switch (keyboardEng[i]) {
+    // switch (keyboardEng2[i]) {
     //   case 'Delete':
     //     key += '<div class="key">Del</div>';
     //     break;
@@ -142,23 +208,23 @@ function createKey() {
     //   case 'ArrowUp':
     //     key += '<div class="key">&#x2191;</div>';
     //   default:
-    //     key += '<div class="key">' + keyboardEng[i] + '</div>';
+    //     key += '<div class="key">' + keyboardEng2[i] + '</div>';
     // }
 
-    if (keyboardEng[i] === 'Delete') {
-      key += `<div class="key" data="${keyboardEng[i]}">Del</div>`;
-    } else if (keyboardEng[i] === 'Control') {
-      key += `<div class="key" data="${keyboardEng[i]}">Ctrl</div>`;
-    } else if (keyboardEng[i] === 'ArrowUp') {
-      key += `<div class="key" data="${keyboardEng[i]}">&#x2191;</div>`;
-    } else if (keyboardEng[i] === 'ArrowLeft') {
-      key += `<div class="key" data="${keyboardEng[i]}">&#x2190;</div>`;
-    } else if (keyboardEng[i] === 'ArrowRight') {
-      key += `<div class="key" data="${keyboardEng[i]}">&#x2192;</div>`;
-    } else if (keyboardEng[i] === 'ArrowDown') {
-      key += `<div class="key" data="${keyboardEng[i]}">&#x2193;</div>`;
+    if (keyboardEng2[i] === 'Delete') {
+      key += `<div class="key" data="${keyboardEng2[i]}">Del</div>`;
+    } else if (keyboardEng2[i] === 'Control') {
+      key += `<div class="key" data="${keyboardEng2[i]}">Ctrl</div>`;
+    } else if (keyboardEng2[i] === 'ArrowUp') {
+      key += `<div class="key" data="${keyboardEng2[i]}">▲</div>`;
+    } else if (keyboardEng2[i] === 'ArrowLeft') {
+      key += `<div class="key" data="${keyboardEng2[i]}">◄</div>`;
+    } else if (keyboardEng2[i] === 'ArrowRight') {
+      key += `<div class="key" data="${keyboardEng2[i]}">►</div>`;
+    } else if (keyboardEng2[i] === 'ArrowDown') {
+      key += `<div class="key" data="${keyboardEng2[i]}">▼</div>`;
     } else {
-      key += `<div class="key" data="${keyboardEng[i]}">${keyboardEng[i]}</div>`;
+      key += `<div class="key" data="${keyboardEng2[i]}">${keyboardEng[i]}</div>`;
     }
   }
 
@@ -168,13 +234,81 @@ function createKey() {
 }
 
 document.onkeydown = function (event) {
-  document.querySelectorAll('#keyboard .key').forEach((el) => {
-    el.classList.remove('active');
-  });
+  const textarea = document.querySelector('#key_input');
+  const keyboard = document.querySelector('#keyboard');
 
-  document.querySelector(`#keyboard .key[data="${event.key}"]`).classList.add('active');
+  document.querySelectorAll('#keyboard .key').forEach((key) => {
+    key.classList.remove('active');
+  });
+  document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.add('active');
+
+  if (event.code === 'Backspace') {
+    textarea.value = textarea.value.slice(0, -1);
+  } else if (event.code === 'Tab') {
+    event.preventDefault();
+    textarea.value += '\t';
+  } else if (event.code === 'CapsLock') {
+    document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.toggle('active');
+    console.log(
+      document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.toggle('active'),
+    );
+    keyboard.classList.toggle('uppercase');
+    textarea.value += '';
+  } else if (
+    event.code === 'ControlLeft' ||
+    event.code === 'ControlRight' ||
+    event.code === 'AltLeft' ||
+    event.code === 'AltRight' ||
+    event.code === 'ShiftLeft' ||
+    event.code === 'ShiftRight' ||
+    event.code === 'Delete' ||
+    event.code === 'Meta'
+  ) {
+    event.preventDefault();
+    textarea.value += '';
+  } else if (event.code === 'Enter') {
+    textarea.value += '\n';
+  } else if (event.code === 'ArrowUp') {
+    textarea.value += '▲';
+  } else if (event.code === 'ArrowLeft') {
+    textarea.value += '◄';
+  } else if (event.code === 'ArrowRight') {
+    textarea.value += '►';
+  } else if (event.code === 'ArrowDown') {
+    textarea.value += '▼';
+  } else {
+    textarea.value += event.key;
+  }
 };
 
 document.onkeyup = function (event) {
-  document.querySelector(`#keyboard .key[data="${event.key}"]`).classList.remove('active');
+  document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.remove('active');
 };
+
+// document.querySelectorAll('#keyboard .key').forEach((key) => {
+//   key.addEventListener('click', () => {
+//     document.querySelectorAll('#keyboard .key').forEach((key) => {
+//       key.classList.remove('active');
+//     });
+//     let code = document.getAttribute('data');
+//     this.classList.add('active');
+//     console.log(code), once;
+//   });
+//   // el.onclick = function (event) {
+//   //   document.querySelectorAll('#keyboard .key').forEach((el) => {
+//   //     el.classList.remove('active');
+//   //   });
+//   //   let code = this.getAttribute('data');
+//   //   this.classList.add('active');
+//   //   console.log(code);
+//   // };
+
+//   // el.mouseup = function (event) {
+//   //   document.querySelectorAll('#keyboard .key').forEach((el) => {
+//   //     el.classList.remove('active');
+//   //   });
+//   //   // let code = this.getAttribute('data');
+//   //   // this.classList.remove('active');
+//   //   // console.log(code);
+//   // };
+// });
