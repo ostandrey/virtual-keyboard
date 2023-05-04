@@ -260,9 +260,10 @@ document.onkeydown = function (event) {
   const keyboard = document.querySelector('#keyboard');
 
   document.querySelectorAll('#keyboard .key').forEach((key) => {
-    key.classList.remove('active');
+    if (!key.getAttribute('data') === 'CapsLock') {
+      key.classList.remove('active');
+    }
   });
-  document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.add('active');
 
   if (event.code === 'Backspace') {
     textarea.value = textarea.value.slice(0, -1);
@@ -270,7 +271,6 @@ document.onkeydown = function (event) {
     event.preventDefault();
     textarea.value += '\t';
   } else if (event.code === 'CapsLock') {
-    document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.toggle('active');
     keyboard.classList.toggle('uppercase');
     textarea.value += '';
   } else if (
@@ -298,9 +298,18 @@ document.onkeydown = function (event) {
   } else {
     textarea.value += event.key;
   }
+
+  if (event.code === 'CapsLock') {
+    document.querySelector(`#keyboard .key[data="CapsLock"]`).classList.toggle('active');
+  } else {
+    document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.add('active');
+  }
 };
 
 document.onkeyup = function (event) {
+  if (event.code === 'CapsLock') {
+    return;
+  }
   document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.remove('active');
 };
 
