@@ -218,6 +218,8 @@ function createHeader() {
   const header = document.createElement('header');
   const title = document.createElement('h1');
 
+  title.className = 'title';
+
   title.innerText = 'Virtual keyboard';
 
   header.appendChild(title);
@@ -232,10 +234,13 @@ function createMain() {
   const description = document.createElement('p');
   const language = document.createElement('p');
 
-  textarea.rows = 10;
-  textarea.cols = 100;
+  textarea.rows = 5;
+  textarea.cols = 50;
   textarea.id = 'key_input';
+  textarea.className = 'textarea';
 
+  description.className = 'description';
+  language.className = 'language';
   description.innerText = `Keyboard created in the ${getOs()} operating system`;
   language.innerText = `To switch the language combination: left ctrl + alt`;
 
@@ -302,7 +307,7 @@ function createKey() {
 
     if (keyboardEng2[i] === 'Delete') {
       key += `<div class="key" data="${keyboardEng2[i]}">Del</div>`;
-    } else if (keyboardEng2[i] === 'Control') {
+    } else if (keyboardEng2[i] === 'ControlLeft' || keyboardEng2[i] === 'ControlRight') {
       key += `<div class="key" data="${keyboardEng2[i]}">Ctrl</div>`;
     } else if (keyboardEng2[i] === 'ArrowUp') {
       key += `<div class="key" data="${keyboardEng2[i]}">▲</div>`;
