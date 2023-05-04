@@ -230,7 +230,6 @@ function createHeader() {
 function createMain() {
   const main = document.createElement('main');
   const textarea = document.createElement('textarea');
-  // const additionalInfo = document.createElement('div');
   const description = document.createElement('p');
   const language = document.createElement('p');
 
@@ -268,12 +267,6 @@ function getOs() {
   return finalOs;
 }
 
-// document.onkeydown = function (event) {
-//   console.log(event);
-//   keyboardUkr.push(event.key);
-//   console.log(keyboardUkr);
-// };
-
 function createKeyboard() {
   const keyboardContainer = document.createElement('div');
 
@@ -291,19 +284,6 @@ function createKey() {
     if (i === 14 || i === 29 || i === 42 || i === 55 || i === 64) {
       key += '<div class="clearfix"></div>';
     }
-
-    // switch (keyboardEng2[i]) {
-    //   case 'Delete':
-    //     key += '<div class="key">Del</div>';
-    //     break;
-    //   case 'Control':
-    //     key += '<div class="key">Ctrl</div>';
-    //     break;
-    //   case 'ArrowUp':
-    //     key += '<div class="key">&#x2191;</div>';
-    //   default:
-    //     key += '<div class="key">' + keyboardEng2[i] + '</div>';
-    // }
 
     if (keyboardEng2[i] === 'Delete') {
       key += `<div class="key" data="${keyboardEng2[i]}">Del</div>`;
@@ -369,11 +349,9 @@ document.onkeydown = function (event) {
     textarea.value += event.key;
   }
 
-  if (event.code === 'CapsLock') {
-    document.querySelector(`#keyboard .key[data="CapsLock"]`).classList.toggle('active');
-  } else {
-    document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.add('active');
-  }
+  event.code === 'CapsLock'
+    ? document.querySelector(`#keyboard .key[data="CapsLock"]`).classList.toggle('active')
+    : document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.add('active');
 };
 
 document.onkeyup = function (event) {
@@ -431,11 +409,7 @@ document.querySelectorAll('#keyboard .key').forEach((el) => {
       textarea.value += keyName;
     }
 
-    if (event.code === 'CapsLock') {
-      this.classList.toggle('active');
-    } else {
-      this.classList.add('active');
-    }
+    event.code === 'CapsLock' ? this.classList.toggle('active') : this.classList.add('active');
   };
 });
 
