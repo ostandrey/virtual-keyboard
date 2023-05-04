@@ -67,6 +67,73 @@ const keyboardEng = [
   'Control',
 ];
 
+const keyboardUkr = [
+  "'",
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+  '-',
+  '=',
+  'Backspace',
+  'Tab',
+  'й',
+  'ц',
+  'у',
+  'к',
+  'е',
+  'н',
+  'г',
+  'ш',
+  'щ',
+  'з',
+  'х',
+  'ї',
+  '\\',
+  'Delete',
+  'CapsLock',
+  'ф',
+  'і',
+  'в',
+  'а',
+  'п',
+  'р',
+  'о',
+  'л',
+  'д',
+  'ж',
+  'є',
+  'Enter',
+  'Shift',
+  'я',
+  'ч',
+  'с',
+  'м',
+  'и',
+  'т',
+  'ь',
+  'б',
+  'ю',
+  '.',
+  'Shift',
+  'Control',
+  'Meta',
+  'Alt',
+  ' ',
+  'Control',
+  'AltGraph',
+  'ArrowLeft',
+  'ArrowDown',
+  'ArrowRight',
+  'Control',
+];
+
 const keyboardEng2 = [
   'Backquote',
   'Digit1',
@@ -198,8 +265,8 @@ function getOs() {
 
 // document.onkeydown = function (event) {
 //   console.log(event);
-//   keyboardEng2.push(event.code);
-//   console.log(keyboardEng2);
+//   keyboardUkr.push(event.key);
+//   console.log(keyboardUkr);
 // };
 
 function createKeyboard() {
@@ -249,8 +316,6 @@ function createKey() {
       key += `<div class="key" data="${keyboardEng2[i]}">${keyboardEng[i]}</div>`;
     }
   }
-
-  console.log();
 
   return key;
 }
@@ -317,14 +382,15 @@ document.querySelectorAll('#keyboard .key').forEach((el) => {
   const textarea = document.querySelector('#key_input');
   const keyboard = document.querySelector('#keyboard');
 
-  el.onclick = function (event) {
+  el.onmousedown = function (event) {
     document.querySelectorAll('#keyboard .key').forEach((key) => {
-      key.classList.remove('active');
+      if (!key.getAttribute('data') === 'CapsLock') {
+        key.classList.remove('active');
+      }
     });
 
     let code = this.getAttribute('data');
     let keyName = this.innerText;
-    this.classList.add('active');
 
     if (code === 'Backspace') {
       textarea.value = textarea.value.slice(0, -1);
@@ -332,7 +398,6 @@ document.querySelectorAll('#keyboard .key').forEach((el) => {
       event.preventDefault();
       textarea.value += '\t';
     } else if (code === 'CapsLock') {
-      document.querySelector(`#keyboard .key[data="${event.code}"]`).classList.toggle('active');
       keyboard.classList.toggle('uppercase');
       textarea.value += '';
     } else if (
@@ -360,5 +425,22 @@ document.querySelectorAll('#keyboard .key').forEach((el) => {
     } else {
       textarea.value += keyName;
     }
+
+    if (event.code === 'CapsLock') {
+      this.classList.toggle('active');
+    } else {
+      this.classList.add('active');
+    }
+  };
+});
+
+document.querySelectorAll('#keyboard .key').forEach((el) => {
+  el.onmouseup = function (event) {
+    document.querySelectorAll('#keyboard .key').forEach((key) => {
+      if (event.code === 'CapsLock') {
+        return;
+      }
+      key.classList.remove('active');
+    });
   };
 });
